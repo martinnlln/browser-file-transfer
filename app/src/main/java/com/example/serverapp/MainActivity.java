@@ -20,8 +20,11 @@ public class MainActivity extends AppCompatActivity {
      * 2. Download documents
      * 3. Load more images... somehow :|
      * 4. tva e mai.
+     *
      */
 
+
+    // commit test
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
