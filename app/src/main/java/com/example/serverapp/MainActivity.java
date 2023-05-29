@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
      * 3. Load more images... somehow :|
      * 4. tva e mai.
      * 123456
+     * 32154654
      *
      */
 
