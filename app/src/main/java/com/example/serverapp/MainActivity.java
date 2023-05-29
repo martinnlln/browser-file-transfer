@@ -11,8 +11,7 @@ import android.provider.Settings;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-    static final Integer WRITE_EXST = 0x3;
-    static final Integer READ_EXST = 0x4;
+
 
     /**
      * TODO
@@ -20,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
      * 2. Download documents
      * 3. Load more images... somehow :|
      * 4. tva e mai.
+     * 123456
      *
      */
 
