@@ -1,7 +1,14 @@
 package com.example.serverapp;
 
 
+import static android.content.Context.WIFI_SERVICE;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.text.format.Formatter;
 
 import androidx.annotation.RequiresApi;
 
@@ -18,11 +25,13 @@ public class App extends NanoHTTPD {
 
     Utilities utilities;
     BrowsePhoneDirectories browsePhoneDirectories;
+    int n;
 
     public App() throws IOException {
         super(8080);
         utilities = new Utilities();
         browsePhoneDirectories = new BrowsePhoneDirectories();
+        n = 1;
         start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
         System.out.println("\nRunning! Point your browsers to http://localhost:8080/ \n");
     }
@@ -49,13 +58,36 @@ public class App extends NanoHTTPD {
             return newFixedLengthResponse(indexPage.getText());
         }
         if (url.equals("/gallery")) {
-            GalleryPage galleryPage = new GalleryPage();
-            return newFixedLengthResponse(galleryPage.getText());
+            GalleryPage galleryPage = new GalleryPage(0);
+            StringBuilder stringBuilder = new StringBuilder();
+            Thread thread = new Thread(() -> {
+                stringBuilder.append(galleryPage.getText());
+            });
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return newFixedLengthResponse(stringBuilder.toString());
         }
 
-        if (url.equals("/storage/emulated/0")) {
-            return newFixedLengthResponse(browsePhoneDirectories.getText(url));
-        } else {
+        if (url.matches("/[0-9]")) {
+            GalleryPage galleryPage = new GalleryPage(++n);
+            StringBuilder stringBuilder = new StringBuilder();
+            Thread thread = new Thread(() -> {
+                stringBuilder.append(galleryPage.getText());
+            });
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(n + "---------------------------------------");
+            return newFixedLengthResponse(stringBuilder.toString());
+        }
+        if (!url.equals("/storage/emulated/0")) {
             if (url.contains(".txt")) {
                 File file = new File(url);
                 return newFixedLengthResponse(browsePhoneDirectories.getTextForTextFiles(file.getAbsolutePath()));
@@ -63,8 +95,8 @@ public class App extends NanoHTTPD {
                 File file = new File(url);
                 return newFixedLengthResponse(browsePhoneDirectories.getTextForImages(file.getAbsolutePath()));
             }
-            return newFixedLengthResponse(browsePhoneDirectories.getText(url));
 
         }
+        return newFixedLengthResponse(browsePhoneDirectories.getText(url));
     }
 }

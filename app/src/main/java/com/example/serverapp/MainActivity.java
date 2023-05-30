@@ -2,13 +2,23 @@ package com.example.serverapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.Settings;
+import android.text.format.Formatter;
+import android.widget.TextView;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.UnknownHostException;
+import java.util.Collections;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,16 +31,18 @@ public class MainActivity extends AppCompatActivity {
      * 4. tva e mai.
      * 123456
      * 32154654
-     *
      */
 
+    TextView ipAddressTV;
 
     // commit test
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ipAddressTV = findViewById(R.id.ip_addr);
 
         if (Build.VERSION.SDK_INT >= 30) {
             if (!Environment.isExternalStorageManager()) {
@@ -41,6 +53,14 @@ public class MainActivity extends AppCompatActivity {
         }
         try {
             new App();
+            @SuppressLint("SetTextI18n")
+            Thread thread = new Thread(() -> {
+                WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+                String ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
+                ipAddressTV.setText(ipAddress + ":8080");
+            });
+            thread.start();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,4 +76,6 @@ public class MainActivity extends AppCompatActivity {
     public static MainActivity getInstance() {
         return instance;
     }
+
+
 }
