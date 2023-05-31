@@ -4,8 +4,15 @@ import static com.example.serverapp.Utilities.fetchGalleryImages;
 import static com.example.serverapp.Utilities.getHtmlFromAssets;
 import static fi.iki.elonen.NanoHTTPD.MIME_HTML;
 
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Base64;
 
 import com.example.serverapp.MainActivity;
@@ -29,15 +36,10 @@ public class GalleryPage extends RouterNanoHTTPD.DefaultHandler {
     @Override
     public String getText() {
         StringBuilder answer = new StringBuilder();
-        String image = "";
-        List<String> base64Img = new ArrayList<>();
-
         answer.append(getHtmlFromAssets(MainActivity.getInstance(), "GalleryPage.html"));
 
-
-        for (int i = initialSize; i < fetchGalleryImages(MainActivity.getInstance()).size(); i++) {
-            if (i % 10 == 0) {
-                initialSize = i;
+        for (int i = n * 10; i < fetchGalleryImages(MainActivity.getInstance()).size(); i++) {
+            if (i == (n * 10) + 12) {
                 break;
             } else {
                 File file = new File(fetchGalleryImages(MainActivity.getInstance()).get(i));
@@ -49,15 +51,38 @@ public class GalleryPage extends RouterNanoHTTPD.DefaultHandler {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bm.compress(Bitmap.CompressFormat.JPEG, 20, baos); // bm is the bitmap object
                 byte[] b = baos.toByteArray();
-                image = Base64.encodeToString(b, Base64.DEFAULT);
-                System.out.println(image.length());
-                base64Img.add(image);
-                answer.append("<div class=\"w3-third\">").append("<img style = \"margin: 50px\" width=\"300\" height=\"300\" src=\"data:image/png;base64, ").append(image).append("\"onclick=\"onClick(this)\" />\n").append("</div>");
+                answer.append("<div class=\"w3-third\">").append("<img style = \"margin: 50px\" width=\"150\" height=\"150\" src=\"data:image/png;base64, ")
+                        .append(Base64.encodeToString(b, Base64.DEFAULT)).append("\"onclick=\"onClick(this)\" />\n").append("</div>");
 
             }
         }
 
-        answer.append("<a href=\"/" + n / 10 + "\">Visit W3Schools</a>\n");
+        if (n * 10 == fetchGalleryImages(MainActivity.getInstance()).size()) {
+
+
+        } else {
+
+            answer.append(
+                    // Back button////
+                    //class="w3-dark-grey w3-xlarge w3-padding-32"
+                    "<div class=\"w3-row-padding\">" +
+                            "<div class=\"w3-half w3-margin-bottom\">" +
+                            "<ul class=\"w3-ul w3-light-grey w3-center\">" +
+                            "<li class=\"w3-dark-grey w3-xlarge w3-padding-32\" onclick=\"history.back()\"> Previous page </li>" +
+                            "</ul>" +
+                            "</div>");
+            // Next button...
+            answer.append(
+                    "<div class=\"w3-half\">" +
+                            "<ul class=\"w3-ul w3-light-grey w3-center\">" +
+                            "<li class=\"w3-red w3-xlarge w3-padding-32\" onclick=\"location.href='/" + n + "';\"> Next Page </li>" +
+                            "</ul>" +
+                            "</div>" +
+                            "</div>");
+        }
+
+
+
 
 //        for (String fetchGalleryImage : fetchGalleryImages(MainActivity.getInstance())) {
 //            File file = new File(fetchGalleryImage);

@@ -59,6 +59,7 @@ public class App extends NanoHTTPD {
         }
         if (url.equals("/gallery")) {
             GalleryPage galleryPage = new GalleryPage(0);
+            n = 1;
             StringBuilder stringBuilder = new StringBuilder();
             Thread thread = new Thread(() -> {
                 stringBuilder.append(galleryPage.getText());
@@ -73,19 +74,8 @@ public class App extends NanoHTTPD {
         }
 
         if (url.matches("/[0-9]")) {
-            GalleryPage galleryPage = new GalleryPage(++n);
-            StringBuilder stringBuilder = new StringBuilder();
-            Thread thread = new Thread(() -> {
-                stringBuilder.append(galleryPage.getText());
-            });
-            thread.start();
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println(n + "---------------------------------------");
-            return newFixedLengthResponse(stringBuilder.toString());
+            GalleryPage galleryPage = new GalleryPage(n++);
+            return newFixedLengthResponse(galleryPage.getText());
         }
         if (!url.equals("/storage/emulated/0")) {
             if (url.contains(".txt")) {
