@@ -10,6 +10,145 @@
 body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 .w3-third img{margin-bottom: -6px; opacity: 0.8; cursor: pointer}
 .w3-third img:hover{opacity: 1}
+/* Absolute Center Spinner */
+.loading {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.loading:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+    background: radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0, .8));
+
+  background: -webkit-radial-gradient(rgba(20, 20, 20,.8), rgba(0, 0, 0,.8));
+}
+
+/* :not(:required) hides these rules from IE9 and below */
+.loading:not(:required) {
+  /* hide "loading..." text */
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.loading:not(:required):after {
+  content: '';
+  display: block;
+  font-size: 10px;
+  width: 1em;
+  height: 1em;
+  margin-top: -0.5em;
+  -webkit-animation: spinner 150ms infinite linear;
+  -moz-animation: spinner 150ms infinite linear;
+  -ms-animation: spinner 150ms infinite linear;
+  -o-animation: spinner 150ms infinite linear;
+  animation: spinner 150ms infinite linear;
+  border-radius: 0.5em;
+  -webkit-box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1.1em 0 0, rgba(255,255,255, 0.75) 0 1.5em 0 0, rgba(255,255,255, 0.75) -1.1em 1.1em 0 0, rgba(255,255,255, 0.75) -1.5em 0 0 0, rgba(255,255,255, 0.75) -1.1em -1.1em 0 0, rgba(255,255,255, 0.75) 0 -1.5em 0 0, rgba(255,255,255, 0.75) 1.1em -1.1em 0 0;
+box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1.1em 0 0, rgba(255,255,255, 0.75) 0 1.5em 0 0, rgba(255,255,255, 0.75) -1.1em 1.1em 0 0, rgba(255,255,255, 0.75) -1.5em 0 0 0, rgba(255,255,255, 0.75) -1.1em -1.1em 0 0, rgba(255,255,255, 0.75) 0 -1.5em 0 0, rgba(255,255,255, 0.75) 1.1em -1.1em 0 0;
+}
+
+/* Animation */
+
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+.image img:hover{opacity: 1}
+
+.image {
+  width: 100%;
+}
+
+/* Adjust the image styling as per your requirements */
+.image img {
+  width: 100%;
+  height: auto;
+     opacity: 0.8;
+}
+
 .center {
   display: flex;
   justify-content: center;
@@ -17,11 +156,84 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   margin-bottom: 50px;
   margin-top: 150px;
 }
+.hover-div ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
 
+.hover-div li {
+  float: left;
+}
+
+.hover-div li a {
+  position: relative;
+  display: block;
+  color:
+#fff;
+  text-align: center;
+  padding: 8px 12px;
+  text-decoration: none;
+  z-index: 0;
+}
+
+li a:before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  background-color:
+#F68026;
+  z-index: -1;
+  transform: scale(0);
+  transition: transform 0.5s ease-in-out;
+}
+
+li a:hover:before,
+li a:focus:before {
+  transform: scale(1);
+}
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px; /* Adjust the height as needed */
+    background-color: #f2f2f2;
+    z-index: 9999; /* Ensure the pagination appears on top of other elements */
+}
+
+.pagination-number {
+    margin: 0 5px;
+    font-size: 30px;
+}
+
+.pagination-number a {
+    text-decoration: none;
+    color: #333;
+}
+
+.pagination-number.arrow {
+    font-weight: bold;
+}
+
+.pagination-number.current {
+    font-weight: bold;
+}
+
+.pagination-number.total {
+    margin-left: 10px;
+}
 
 </style>
 </head>
-<body class="w3-light-grey w3-content" style="max-width:1600px">
+<body onload="myFunction()" class="w3-light-grey w3-content" style="max-width:1600px">
 
 
 
@@ -33,7 +245,7 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <a href="/" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
         <a href="/gallery" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Gallery</a>
         <a href="/videos" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Videos</a>
-        <a href="/storage/emulated/0" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">SDCARD</a>
+        <a href="/directories" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">SDCARD</a>
         <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a>
         <a href="#packages" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Packages</a>
         <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
@@ -58,15 +270,18 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <!-- Push down content on small screens -->
     <div class="w3-hide-large" style="margin-top:83px"></div>
 
+    <div id="loader" class="loading">Loading&#8230;</div>
 
-    <!-- Modal for full size images on click-->
+    <!-- Modal for full-size images on click -->
     <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
         <span class="w3-button w3-black w3-xlarge w3-display-topright">×</span>
         <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
             <img id="img01" class="w3-image">
             <p id="caption"></p>
+            <a id="downloadButton" class="w3-button w3-black" href="" download>Download</a>
         </div>
     </div>
+
 
 
     <script>
@@ -88,9 +303,17 @@ function onClick(element) {
   var captionText = document.getElementById("caption");
   captionText.innerHTML = element.alt;
 }
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
 
+  var downloadButton = document.getElementById("downloadButton");
+  downloadButton.href = element.src;
+}
+
+function myFunction() {
+document.getElementById("loader").style.display = "none";
+}
 </script>
-
-
-</body>
-</html>

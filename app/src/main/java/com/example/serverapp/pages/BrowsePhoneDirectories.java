@@ -14,8 +14,6 @@ import java.io.IOException;
 public class BrowsePhoneDirectories {
     public BrowsePhoneDirectories() {
     }
-
-
     public String getTextForImages(String fileName) {
         StringBuilder answer = new StringBuilder();
         answer.append(getHtmlFromAssets(MainActivity.getInstance(), "ImagePopUp.html"));

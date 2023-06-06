@@ -12,7 +12,9 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.text.format.Formatter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -52,18 +54,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         try {
-            new App();
-            @SuppressLint("SetTextI18n")
-            Thread thread = new Thread(() -> {
-                WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-                String ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
-                ipAddressTV.setText(ipAddress + ":8080");
-            });
-            thread.start();
-
+            new AndroidServer();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+        @SuppressLint("SetTextI18n")
+        Thread thread = new Thread(() -> {
+            WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+            String ipAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
+            ipAddressTV.setText(ipAddress + ":8080");
+        });
+        thread.start();
 
     }
 

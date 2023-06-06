@@ -17,17 +17,14 @@ body {font-size:16px;}
 </head>
 <body>
 
-
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-navy w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+<nav class="w3-sidebar w3-navy w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;position: fixed;left: 0;top: 0;height: 100%;overflow:auto;" id="mySidebar">
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
-
     <div class="w3-bar-block">
         <a href="/" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
         <a href="/gallery" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Gallery</a>
         <a href="/videos" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Videos</a>
-        <a href="/storage/emulated/0" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">SDCARD</a>
-        <a href="#designers" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Designers</a>
+        <a href="/directories" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">SDCARD</a>
+        <a href="/SlideShow" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Slide Show</a>
         <a href="#packages" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Packages</a>
         <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
     </div>
@@ -35,6 +32,7 @@ body {font-size:16px;}
         <h3 class="w3-padding-64"><b>Browse<br>Phone Data</b></h3>
     </div>
 </nav>
+
 
 <!-- Top menu on small screens -->
 <header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">

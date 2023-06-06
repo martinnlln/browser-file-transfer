@@ -6,9 +6,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.webkit.MimeTypeMap;
 
 import androidx.annotation.RequiresApi;
 
@@ -82,21 +84,29 @@ public class Utilities {
             int dataColumnIndex = imagecursor.getColumnIndex(MediaStore.Images.Media.DATA);//get column index
             galleryImageUrls.add(imagecursor.getString(dataColumnIndex));//get Image from column index
 
+            System.out.println(imagecursor.getString(dataColumnIndex));
         }
 
         return galleryImageUrls;
     }
 
     public static String getImageToBase64(String path, int quality) {
-        String image = "";
+//        String image = "";
         File file = new File(path);
-        Bitmap bm = BitmapFactory.decodeFile(file.getAbsolutePath());
+//        Bitmap bm = BitmapFactory.decodeFile(file.getAbsolutePath());
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        bm.compress(Bitmap.CompressFormat.JPEG, quality, baos); // bm is the bitmap object
+//        byte[] b = baos.toByteArray();
+//        image = Base64.encodeToString(b, Base64.DEFAULT);
+//
+//        System.out.println(image);
+//        return image;
+        Bitmap thumbBitmap = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(file.getAbsolutePath()), 100, 100);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, quality, baos); // bm is the bitmap object
+        thumbBitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);
         byte[] b = baos.toByteArray();
-        image = Base64.encodeToString(b, Base64.DEFAULT);
-
-        return image;
+        String s = Base64.encodeToString(b, Base64.DEFAULT);
+        return s;
     }
 
 
@@ -121,5 +131,12 @@ public class Utilities {
 
         return file1.getName();
     }
-
+    public static String getMimeType(String filePath) {
+        String mimeType = "application/octet-stream";
+        String extension = MimeTypeMap.getFileExtensionFromUrl(filePath);
+        if (extension != null) {
+            mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+        return mimeType;
+    }
 }

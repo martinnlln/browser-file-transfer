@@ -38,8 +38,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     implementation group: 'org.nanohttpd', name: 'nanohttpd', version: '2.3.1'
-    // https://mvnrepository.com/artifact/org.nanohttpd/nanohttpd-nanolets
-    implementation group: 'org.nanohttpd', name: 'nanohttpd-nanolets', version: '2.3.1'
+    implementation group: 'org.nanohttpd', name: 'nanohttpd-webserver', version: '2.3.1'
+
+
 
 
 }
